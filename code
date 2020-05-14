@@ -1,0 +1,75 @@
+#define NUMNODES 500
+#include <stdio.h>
+#include <stdlib.h>
+#include<errno.h>
+struct node{
+    int info;
+    int used;
+}node[NUMNODES];
+void maketree(int); void setleft(int,int);void setright(int,int);//declaration
+void main()
+    {
+        int p,q,number;
+        printf("start entering bst enteries and -1 to quit\n");
+        scanf("%d",&number);
+        maketree(number);
+        while(number!=-1)
+        {
+            scanf("%d",&number);
+            p=q=0;
+            while(q<NUMNODES&&node[q].used==1&&number!=node[p].info)
+            {
+                p=q;
+                if(number<node[p].info)
+                    q=2*p+1;
+                else
+                    q=2*p+2;
+            }    
+            if(number==node[p].info){
+            printf("%d is duplicate\n",number);
+            }  
+            else if(number<node[p].info)
+            {
+            setleft(p,number);
+            }
+            else
+            setright(p,number);
+        }
+        for(int i=0;i<NUMNODES;i++){
+            if(node[i].used==1){
+            printf(" %d ",node[i].info);}
+        }
+    }
+    void maketree(int x){
+        int p;
+        node[0].info=x;
+        node[0].used=1;
+        for(p=1;p<NUMNODES;p++)
+            node[p].used=0;
+    }
+    void setleft(int p,int x){
+        int q;
+        q=2*p+1;
+        if(q>=NUMNODES)
+            printf("overflow");
+        else if (node[q].used)
+            printf("invalid insertion");
+        else
+        {
+            node[q].info=x;
+            node[q].used=1;
+        }    
+    }
+    void setright(int p,int x){
+        int q;
+        q=2*p+2;
+        if(q>=NUMNODES)
+            printf("overflow");
+        else if (node[q].used)
+            printf("invalid insertion");
+        else
+        {
+            node[q].info=x;
+            node[q].used=1;
+        }    
+    }
